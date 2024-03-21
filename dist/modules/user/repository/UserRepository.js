@@ -1,10 +1,11 @@
-// "use strict";
-// Object.defineProperty(exports, "__esModule", { value: true });
-// exports.UserRepository = void 0;
-// const mysql_1 = require("../../../mysql");
-// const uuid_1 = require("uuid");
-// const bcrypt_1 = require("bcrypt");
-// const jsonwebtoken_1 = require("jsonwebtoken");
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UserRepository = void 0;
+const mysql_1 = require("../../../mysql");
+const uuid_1 = require("uuid");
+const bcrypt_1 = require("bcrypt");
+const jsonwebtoken_1 = require("jsonwebtoken");
+
 // class UserRepository {
 // 	create(request, response) {
 // 		const { name, email, password } = request.body;
