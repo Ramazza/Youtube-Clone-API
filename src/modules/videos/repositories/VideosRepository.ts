@@ -5,12 +5,13 @@ import { sign } from 'jsonwebtoken';
 import { Request, Response} from 'express'
 
 class VideoRepository {
+
 	create(request: Request, response: Response) {
-		const { title, description, user_id, thumbnail} = request.body;
+		const { title, description, user_id, user_name, thumbnail} = request.body;
 		pool.getConnection((error: any, connection: any) => {
 			connection.query(
-				'INSERT INTO videos (video_id, user_id, title, description, thumbnail) VALUES (?,?,?,?,?)',
-				[uuidv4(), user_id, title, description, thumbnail],
+				'INSERT INTO videos (video_id, user_id, user_name, title, description, thumbnail) VALUES (?,?,?,?,?,?)',
+				[uuidv4(), user_id, user_name, title, description, thumbnail],
 				(error: any, result: any, filds: any) => {
 					connection.release();
 					if (error) {
@@ -37,6 +38,30 @@ class VideoRepository {
 				}
 			)
 		})
+	}
+
+	getAllVideos(request: Request, response: Response) {
+		pool.getConnection((error: Error, connection: any) => {
+			if (error) {
+				response.status(400).json({ error: 'Erro ao conectar ao banco de dados!' });
+				return; 
+			}
+			connection.query(
+				'SELECT * FROM videos',
+				(error: any, results: any, fields: any) => {
+					connection.release();
+					if (error) {
+						response.status(400).json({ error: 'Erro ao buscar os vídeos!' });
+						return;
+					}
+					if (results.length === 0) {
+						response.status(404).json({ error: 'Nenhum vídeo encontrado!' });
+						return; 
+					}
+					return response.status(200).json({ message: 'Vídeos retornados com sucesso', videos: results });
+				}
+			);
+		});
 	}
 
 	searchVideos(request: Request, response: Response) {
