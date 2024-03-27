@@ -76,13 +76,16 @@ class VideoRepository {
 						response.status(400).json({ error: 'Erro ao buscar os vídeos!' })
 					} else {
 						const videos = results.map((video: any) => ({
+							video_id: video.video_id,
+							user_id: video.user_id,
+							user_name: video.user_name,
 							title: video.title,
-							description: video.description
+							description: video.description,
+							thumbnail: video.thumbnail,
+							upload_time: video.upload_time
 						}));
 						response.status(200).json({ message: 'Vídeos retornados com sucesso', videos });
-					}
-					// response.status(200).json({ message: 'Vídeos retornados com sucesso', videos: results })
-				}
+					}				}
 			)
 		})
 	}
