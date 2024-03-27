@@ -6,58 +6,6 @@ const uuid_1 = require("uuid");
 const bcrypt_1 = require("bcrypt");
 const jsonwebtoken_1 = require("jsonwebtoken");
 class UserRepository {
-    // create(request: Request, response: Response) {
-    // 	const { name, email, password } = request.body;
-    // 	pool.getConnection((error: any, connection: any) => {
-    // 		hash(password, 10, (err, hash) => {
-    // 			if (err) {
-    // 				return response.status(500).json(err);
-    // 			}
-    // 			connection.query(
-    // 				'INSERT INTO users (user_id, name, email, password) VALUES (?,?,?,?)',
-    // 				[uuidv4(), name, email, hash],
-    // 				(error: any, result: any, filds: any) => {
-    // 					connection.release();
-    // 					if (error) {
-    // 						response.status(400).json({ error: 'Erro na autentificação' });
-    // 					}
-    // 					response
-    // 						.status(200)
-    // 						.json({ message: 'Usuário criado com sucesso' });
-    // 				}
-    // 			);
-    // 		});
-    // 	});
-    // }
-    // create(request: Request, response: Response) {
-    // 	const { name, email, password } = request.body;
-    // 	pool.getConnection((error: any, connection: any) => {
-    // 		if (error) {
-    // 			return console.log('ERROR!', error);
-    // 		}
-    // 		if (!connection) {
-    // 			return console.log('No connection was found.');
-    // 		}
-    // 		hash(password, 10, (err, hash) => {
-    // 			if (err) {
-    // 				return response.status(500).json(err);
-    // 			}
-    // 			connection.query(
-    // 				'INSERT INTO users (user_id, name, email, password) VALUES (?,?,?,?)',
-    // 				[uuidv4(), name, email, hash],
-    // 				(error: any, result: any, filds: any) => {
-    // 					connection.release();
-    // 					if (error) {
-    // 						response.status(400).json({ error: 'Erro na autentificação' });
-    // 					}
-    // 					response
-    // 						.status(200)
-    // 						.json({ message: 'Usuário criado com sucesso' });
-    // 				}
-    // 			);
-    // 		});
-    // 	});
-    // }
     create(request, response) {
         const { name, email, password } = request.body;
         mysql_1.pool.getConnection((error, connection) => {
