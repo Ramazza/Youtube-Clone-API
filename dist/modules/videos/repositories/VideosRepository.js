@@ -4,21 +4,18 @@ exports.VideoRepository = void 0;
 const mysql_1 = require("../../../mysql");
 const uuid_1 = require("uuid");
 class VideoRepository {
-	create(request, response) {
-		const { title, description, user_id, user_name, thumbnail } = request.body;
-		mysql_1.pool.getConnection((error, connection) => {
-			 if (error) {
-				  return response.status(500).json({ error: 'Internal server error' });
-			 }
-			 connection.query('INSERT INTO videos (video_id, user_id, user_name, title, description, thumbnail) VALUES (?,?,?,?,?,?)', [(0, uuid_1.v4)(), user_id, user_name, title, description, thumbnail], (error, result, fields) => {
-				  connection.release();
-				  if (error) {
-						return response.status(400).json({ error: "Erro na autentificação", message: error.message });
-				  }
-				  return response.status(200).json({ message: 'Vídeo criado com sucesso' });
-			 });
-		});
-  }
+    create(request, response) {
+        const { title, description, user_id, user_name, thumbnail } = request.body;
+        mysql_1.pool.getConnection((error, connection) => {
+            connection.query('INSERT INTO videos (video_id, user_id, user_name, title, description, thumbnail) VALUES (?,?,?,?,?,?)', [(0, uuid_1.v4)(), user_id, user_name, title, description, thumbnail], (error, result, filds) => {
+                connection.release();
+                if (error) {
+                    return response.status(400).json({ error: "Erro na autentificação", message: error.message });
+                }
+                return response.status(200).json({ message: 'Vídeo criado com sucesso' });
+            });
+        });
+    }
     getVideos(request, response) {
         const { user_id } = request.query;
         mysql_1.pool.getConnection((error, connection) => {
@@ -61,12 +58,16 @@ class VideoRepository {
                 }
                 else {
                     const videos = results.map((video) => ({
+                        video_id: video.video_id,
+                        user_id: video.user_id,
+                        user_name: video.user_name,
                         title: video.title,
-                        description: video.description
+                        description: video.description,
+                        thumbnail: video.thumbnail,
+                        upload_time: video.upload_time
                     }));
                     response.status(200).json({ message: 'Vídeos retornados com sucesso', videos });
                 }
-                // response.status(200).json({ message: 'Vídeos retornados com sucesso', videos: results })
             });
         });
     }
